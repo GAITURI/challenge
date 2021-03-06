@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Movie Store</title>
+	<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap.css">
+
+	<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap-grid.css">
+	<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap-grid.min.css">
+	<link rel="stylesheet" type="text/css" href="../css/style.css">
+</head>
+<body>
+  <?php
+require 'connection.php';
+   ?>
+	<!-- Jumbotron -->
+	<div class="container-fluid" id="divMain">
+		<div class="jumbotron">
+			<div class="container container-fluid">
+				<img src="../images/images.png">
+  <p class="alert alert-info">Real and Reel : Buy One get Two Free</p>
+  <a class="btn btn-primary btn-lg" href="../index.html" role="button">Back to HomePage</a>
+			</div>
+
+</div>
+	</div>
+
+	<br>
+
+	<div class="container container-fluid">
+   <form action="upload.php" method="post">
+  <div class="row">
+    <div class="col">
+               <label>Movie Name</label>
+
+      <input type="text" class="form-control" placeholder="Movie Name" name="movie_name" required="">
+    </div>
+    <div class="col">
+               <label>Lead Actor</label>
+
+      <input type="text" class="form-control" placeholder="Lead Actor" name="lead_actor">
+    </div>
+
+  </div>
+  <br>
+   <div class="row">
+    <div class="col">
+            <label>Duration</label>
+
+      <input type="number" class="form-control" placeholder="Time in Hours" name="duration" required="">
+    </div>
+    <div class="col">
+      <label>Movie Poster</label>
+      <input type="file" class="form-control"  placeholder="Movie Poster" required="">
+    </div>
+
+ 
+  </div>
+  <br>
+   <div class="row">
+    <div class="col">
+            <label>Ratings</label>
+
+      <select class="form-control" name="rate">
+        <option value="PG">PG</option>
+        <option value="G">G</option>
+      </select>
+    </div>
+    <div class="col">
+         <label>Genre</label>
+
+      <select class="form-control" name="genre">
+        <option value="Action">Action</option>
+        <option value="Thriller">Thriller</option>
+        <option value="drama">Drama</option>
+      </select>   
+       </div>
+
+  </div>
+   
+<br>
+   <div class="row" style="margin-bottom: 10px;">
+    <div class="col">
+      <input type="submit" name="save" value="Submit Movie" class="form-control btn btn-primary btn-block">
+    </div>
+    <div class="col">
+      <input type="reset" class="form-control btn btn-danger btn-block">
+    </div>
+
+  </div>
+</form>
+
+
+	</div>
+
+
+
+<script type="text/javascript" src="../js/style.js"></script>
+<script type="text/javascript" src="../bootstrap/js/bootstrap.js"></script>
+<script type="text/javascript" src="../bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+<?php
+// //check if the connection is valid
+// if ($conn->connect_error) {
+//       die("connection failed" . $conn->connect_error);
+//  } else {
+//   echo "works";
+//  }
+//define variables for input
+$movie_name = '';
+$lead_actor = '';
+$duration = '';
+$rateing  = '';
+$genre = '';
+
+
+
+
+
+
+
+//fetch users input 
+//check if submit is pressed / isset function 
+if (isset($_POST['save'])) {
+
+    # code...
+ 
+  //preparing sql statement
+  $stmt = $conn->prepare("INSERT INTO users (moviename,leadactor,genre) VALUES (?,?,?)");
+  $stmt->bind_param("sss",$movie_name,$lead_actor,$genre);
+
+
+ //capture users input
+  $movie_name = $_POST['movie_name'];
+  $lead_actor = $_POST['lead_actor'];
+  $duration = $_POST['duration'];
+  $rateing = $_POST['rate'];
+  $genre = $_POST['genre'];
+  $stmt->execute();
+  
+  echo "new records inserted";
+  //do my output
+  // echo "Movie Name is ".''.$movie_name;
+  // echo "<br>";
+  //   echo "The lead actor is ".''.$lead_actor;
+  //   echo "<br>";
+  //   echo "The movie is  ".''.$duration." hrs long";
+  // echo "<br>";
+  // echo "Rating: ".''.$rateing;
+  // echo "<br>";
+  //   echo "Genre: ".''.$genre;
+  $stmt->close();
+ $conn->close();
+
+}
+
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
