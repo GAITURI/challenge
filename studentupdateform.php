@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta name="viewport"content="width=device-width, initial-scale=1.0">
-	<!-- Latest compiled and minified CSS -->
+  <meta name="viewport"content="width=device-width, initial-scale=1.0">
+  <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
 <!-- jQuery library -->
@@ -20,7 +20,7 @@
   <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap-utilities.css">
   <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap-css">
   <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css"> -->
-	<title>STUDENTS FORM</title>
+  <title>STUDENTS FORM</title>
 </head>
 <style type="text/css">
    body{
@@ -66,7 +66,7 @@
   <?php
 require 'studentval.php';
 ?>
-	<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+  <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
     <caption><h2>STUDENTS ENTRY FORM</h2></caption>
  <!-- <label class="label-success">studeez</label> -->
  <!-- <div class="jumbotron">  -->
@@ -94,15 +94,19 @@ require 'studentval.php';
 
 
     <div class="col-md-4 mb-3">
-      <label for="validationServerUsername">email</label>
+      <label for="validationServerUsername">Gender</label>
       <div class="input-group">
-      <input type="email" name="email" placeholder="Enter Email" class="form-control">
-      <span class="error"><?php echo $emailErr?>;</span>
+        <!-- <div class="input-group-prepend"> -->
+          <!-- <span class="input-group-text" id="inputGroupPrepend3">@</span> -->
         </div>
 
-          
+          <select id="gender" name="gender" class="form-control" name="gender">
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Binary">Binary</option>
+            </select>
         <div class="invalid-feedback">
-          Please enter Email.
+          Please choose Gender.
         </div>
 
       </div>
@@ -123,10 +127,15 @@ require 'studentval.php';
       <div class="invalid-feedback">
         Please provide a valid reg_date.
       </div>
-     
+      <!-- <span class="error"> <?php echo $reg_dateErr;?></span> -->
     </div>
     
   </div>
+  <div class="col-6">
+      <label><strong>student's passport photo</strong></label>
+      <input type="file" class="form-control" name="passport" id="passport"  placeholder="Student's passport photo" required="" value=""><br><br>
+      <img src="studentspassportphotos/<?php echo $passport?>" style="height:100px;width: 100px;">
+    </div>
   <div class="form-group">
     <div class="form-check">
       <input class="form-check-input is-invalid" type="checkbox" value="" id="invalidCheck3" required>
@@ -138,10 +147,16 @@ require 'studentval.php';
       </div>
     </div>
   </div>
-  <input type="submit" name="save" class="btn btn-primary form-control" >
+  <input type="submit" name="update" class="btn btn-primary form-control"s value="update" >
 </form>
 </div>
-
+<div class="grid-container">
+  <div class="header"> </div>
+  <div class="left"></div>
+  <div class="midddle"></div>
+  <div class="right"></div>
+  <div class="footer"></div>
+</div>
 <br>
 <footer>
   <div class="container footer">
@@ -203,25 +218,25 @@ require 'studentval.php';
 //   echo "Error: " . $sql . "<br>" . $conn->error;
 // }
 // if (isset($_POST['save'])) {
-// 	# code...
-// 	// $fname = $_POST['firstName'];
-// 	// $email = $_POST['email'];
-// 	if (empty($_POST['fullname'])) {
-// 		# code...
-// 		$errorFirst = "FULLNAME is empty";
-// 	} else {
-// 		$fname = $_POST['fullname'];
-// 	}
+//  # code...
+//  // $fname = $_POST['firstName'];
+//  // $email = $_POST['email'];
+//  if (empty($_POST['fullname'])) {
+//    # code...
+//    $errorFirst = "FULLNAME is empty";
+//  } else {
+//    $fname = $_POST['fullname'];
+//  }
 
 
-// 		if (empty($_POST['email'])) {
-// 		# code...
-// 		$errorFirst = "Email address is empty";
-// 	} else {
-// 		$email = $_POST['email'];
-// 	}
+//    if (empty($_POST['email'])) {
+//    # code...
+//    $errorFirst = "Email address is empty";
+//  } else {
+//    $email = $_POST['email'];
+//  }
 
-// 	echo "fullname: ".$fname."Email: ".$email;
+//  echo "fullname: ".$fname."Email: ".$email;
 
 // if (filter_var($phone, FILTER_VALIDATE_INT) === 0 || !filter_var($phone, FILTER_VALIDATE_INT) === false) {
 //   echo("phone is valid");

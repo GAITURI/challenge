@@ -2,7 +2,7 @@
 <html>
 <head>
 		<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap-grid.css">
-	<link rel="stylesheet" type="text/css" href="bootstrap-grid.min.css">
+	<link rel="stylesheet" type="text/css" href="bootstrap/css/ bootstrap-grid.min.css">
 	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
 	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
 	<title>Fetch And Display</title>

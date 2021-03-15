@@ -24,16 +24,17 @@
 		</noscript>
 	</head>
 	<body>
+<?php require 'staffval.php'; ?>
 
-<?php require 'staffval.php';?>
 	<!-- Header -->
 		<div id="header">
+			<div id="nav-wrapper">
 				<!-- Nav -->
 				<nav id="nav">
 					<ul>
 						<li><a href="homepage.php">Homepage</a></li>
 						<li class="active"><a href="students.php">Student Page</a></li>
-						<li><a href="#">Lost Password</a></li>
+						<li><a href="authentication/logout.php">Log out</a></li>
 						<li><a href="/">Upload Documents</a></li>
 					</ul>
 				</nav>
@@ -107,7 +108,7 @@
 								<h2>Staff Form</h2>
 								<span class="byline">"We Keep on shining!"</span>
 							</header>
-	<form  action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST">
+	<form  action="update.php" method="POST">
 		
 	
 		<div class="row">
@@ -178,10 +179,7 @@
         <?php
       if ($update == true):
         ?>
-           <div class="col">
-      <input type="submit" name="update" class="btn btn-warning btn-block">
-    </div>
-
+           
     <?php
       else:
         ?>
