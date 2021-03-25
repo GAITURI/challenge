@@ -1,28 +1,8 @@
 <?php
-
-// // use mysqli extension to connect to database
+//create connection with db
 $conn = mysqli_connect("localhost","root","","schooldata");
 
-
-// $sql="CREATE TABLE studentdata(
-// id int(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-// Firstname VARCHAR(30) NOT NULL,
-// Lastname VARCHAR(30) NOT NULL,
-// email VARCHAR (50),
-// Admission_no INT (22),
-// reg_date TIMESTAMP DEFAULT 
-// CURRENT_TIMESTAMP ON 
-// UPDATE CURRENT_TIMESTAMP)";
-
-// if ($conn->query($sql) === TRUE) {
-//   # code...
-//   echo "table  created";
-// }else{
-//   echo "table not created:". $conn->error;
- 
-// }
-
-//  // list all variables
+//list variables
 $firstname="";
 $lastname="";
 $Admission_no="";
@@ -36,20 +16,24 @@ $lastnameErr="";
 $Admission_noErr="";
 $reg_dateErr;
 $reg_dateErr="";
-
+$a="";
 $email="";
 $emailErr="";
+$id="1";
+$result="";
+$row="";
+ if (isset($_GET['edit'])) {
+ 	# code...
+ 	$sql= "SELECT * FROM studentdata WHERE Id =$id";
+ 	$result=$conn->query($sql) or die($conn->error);
+  	$row=$result->fetch_assoc();
 
-if (isset($_POST["save"])){
-
-  // $id=$_POST["id"];
-  // $firstname = $_POST["firstName"];
-  // $Lastname = $_POST["Lastname"];
-  // $email = $_POST["email"];
-  // $Admission_number= $_POST["Admission_no"];
-  // $Date=$_POST["reg_date"];
-
-
+      $firstname=$row["Firstname"];
+      $lastname=$row["Lastname"];
+      $email=$row["email"];
+      $Admission_no=$row["Admission_no"];
+ }
+ if (isset($_POST["save"])){
   if (empty($_POST["firstName"])) {
     $firstnameErr = "Name is required";
   } else {
@@ -103,17 +87,15 @@ if (empty($_POST["email"])) {
 
 if (empty($firstnameErr) && empty($lastnameErr) && empty($emailErr)&& empty($Admission_noErr) ) 
 {
-//statement
-$stmt=$conn->prepare("INSERT INTO studentdata(Firstname,Lastname,email,Admission_no)VALUES(?,?,?,?)");
+	
 
-$stmt->bind_param("sssi",$firstname,$lastname,$email,$Admission_no); 
-$stmt->execute();
-echo "new Data Created Successfuly";
-$stmt->close();
-
-  }
+	$sql="UPDATE studentdata SET Firstname='$firstname',Lastname='$lastname',email='$email',Admission_no='$Admission_no'WHERE Id='$id'";
+	  $a=$conn->query($sql) or die($conn->error);
+       if ($a===TRUE) {
+        # code...
+         echo "update successful";
+        header('Location:liststudent.php');
+         }
+     } else{echo "Please input valid details";}
 
 }
-
-
-?>

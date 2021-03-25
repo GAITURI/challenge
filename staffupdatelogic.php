@@ -1,183 +1,156 @@
 <?php
-// // create a connection to the database
-$servername ="localhost";
-$username="root";
-$password ="";
-$dbname="schooldata";
-
-// // use mysqli extension to connect to database
-$conn = new mysqli($servername,$username,$password,$dbname);
-
-
-
-//Define Empty Varibales
-  $id="";
-  $firstName="";
-  $Lastname="";
-  $employeeid = "";
-  $gender = "";
-  $admission_number="";
-  $salary="";
-  $date="";
-  $firstnameErr="";
-   $LastnameErr="";
-  $employeeiderr="";
-  $gendererr="";
-  $admission_numbererr="";
-  $salaryerr="";
-  $iderr="";
-  $integerErr="";
-  $stmt="";
-  $update="";
-$empid="";
-$id=5;
+//create connection with db
+$conn = mysqli_connect("localhost","root","","schooldata");
+// if ( mysqli_connect_errno() ) {
+//   // If there is an error with the connection, stop the script and display the error.
+//   exit('Failed to connect to MySQL: ' . mysqli_connect_error());
+// }else{
+//   echo "conn successful";
+// }
+//variables
+$firstname=$lastname=$email=$employeeid=$salary=$gender="";
+$fnameerr=$lnameerr=$emailerr=$employeeiderr=$salaryerr=$gendererr="";
+$id="3";
+$result='';
+$row="";
 $passport="";
-$a="";
-
-
-
 if (isset($_GET['edit'])) {
+  # code...
   $id=$_GET['edit'];
 
-
-  $sql ="SELECT* FROM staffdata WHERE id=$id";
-  $result=$conn->query($sql) or  die($conn->error);
-  $row=$result->fetch_assoc();
-  $firstName = $row["Firstname"];
-  $Lastname = $row['Lastname'];
-  $employeeid = $row['Employeeid'];
-  $gender = $row['Gender'];
-  $admission_number= $row['Admission_number'];
-  $salary=$row['Salary'];
-  $date=$row['reg_date'];
-
-}
-if (isset($_POST['update'])) {
-  # code...
-  $id =$_POST['id'];
-
-  if (empty($_POST["firstname"])) {
-    $firstnameErr = "Name is required";
-  } else {
-    $firstName=$_POST["firstname"];
-
-    // $firstname = test_input($_POST["firstname"]);
-    $firstName=filter_var($firstName, FILTER_SANITIZE_STRING);
-    // check if name only contains letters and whitespace
-    if (!preg_match("/^[a-zA-Z-' ]*$/",$firstName)) {
-      $firstnameErr = "Only letters and white space allowed";
-    }
-  }
+  $sql="SELECT * FROM staffdata  WHERE Id=$id";
+    $result=$conn->query($sql) or die($conn->error);
   
+   $row=$result->fetch_assoc(); 
+      $firstname=$row["Firstname"];
+      $lastname=$row["Lastname"];
+      $email=$row["Email"];
+      $employeeid=$row["Employee_id"];
+      $gender=$row["Gender"];
+      $salary=$row["Salary"];
+      $passport=$row["Passport"];
 
-  if (empty($_POST["Lastname"])) {
-    $LastnameErr = "Name is required";
-  } else {
-    $Lastname=$_POST["Lastname"];
-    // $lastname = test_input($_POST["Lastname"]);
-    $Lastname=filter_var($Lastname, FILTER_SANITIZE_STRING);
-    // check if name only contains letters and whitespace
-    if (!preg_match("/^[a-zA-Z-' ]*$/",$Lastname)) {
-      $LastnameErr = "Only letters and white space allowed";
-    }
-  }
-  
-
-
-  if (empty($_POST["gender"])) {
-    $genderErr = "Gender is required";
-  } else {
-
-    $gender = $_POST["gender"];
-  }
-
-  if (empty($_POST["id"])) {
-    # code...
-    $integerErr="integer is required";
-  }else{
-     $id=$_POST["id"];
-    
-     $id=filter_var($id, FILTER_SANITIZE_NUMBER_INT);
-    //filter integer
-      # code...
-    if (filter_var($id, FILTER_VALIDATE_INT) ===0 || !filter_var($id, FILTER_VALIDATE_INT) === false )
-     {
-      $id="id is valid";
-    }
-    else
-      {
-        $iderr="integer is not valid";
-      }
-  }
-if (empty($_POST["admission_number"])) {
-    # code...
-    $integerErr="integer is required";
-  }else{
-    $admission_number=$_POST["admission_number"];
-    $admission_number=filter_var($admission_number, FILTER_SANITIZE_NUMBER_INT);
-    if (filter_var($admission_number, FILTER_VALIDATE_INT) ===0 || !filter_var($admission_number, FILTER_VALIDATE_INT) === false )
-     {
-      $admission_number="valid admission_number";
-    }
-    else
-      {
-        $admission_numbererr="integer is not valid";
-      }
-  }
-if (empty($_POST["Employeeid"])) {
-    # code...
-    $integerErr="integer is required";
-  }else{
-    $employeeid=$_POST["Employeeid"];
-    $employeeid=filter_var($employeeid, FILTER_SANITIZE_NUMBER_INT);
-    if (filter_var($employeeid, FILTER_VALIDATE_INT) ===0 || !filter_var($employeeid, FILTER_VALIDATE_INT) === false )
-     {
-      $employeeiderr="";
-    }
-    else
-      {
-        $employeeiderr="integer is not valid";
-      }
-
-if (empty($_POST['salary'])) {
-  # code...
-  $salaryerr="NO DATA ENTERED";
-
-}else{
-  $salary=$_POST["salary"];
-$salary=filter_var($salary, FILTER_SANITIZE_NUMBER_INT);
-    // validate integers
-    
-    if (filter_var($salary, FILTER_VALIDATE_INT) ===0 || !filter_var($salary, FILTER_VALIDATE_INT) === false )
-     {
-      $salary="Salary is valid";
-    }
-    else
-      {
-        $salaryerr="integer is not valid";
-      }
 }
-}
-
-
-if (empty($firstnameErr) && empty($lastnameErr) &&empty($employeeiderr)&&empty($genderErr)&& empty($salaryerr) &&empty($admission_numbererr)){
+if (isset($_POST['save'])) {
   # code...
+//verifying and cleaning data
+        if (empty($_POST["firstname"])) {
+    # code...
+            $fnameerr="firstname required";
+               }else{
+                   $firstname=$_POST["firstname"];
+                  $firstname=filter_var($firstname, FILTER_SANITIZE_STRING);
+              // check if name only contains letters and whitespace
+              if (!preg_match("/^[a-zA-Z-' ]*$/",$firstname)) {
+               $fnameerr = "Only letters and white space allowed";header("location:error.php");
+                                                               }
+                     }
+         if (empty($_POST["lastname"])) {
+                           # code...
+          $lnameerr="Lastname is required";
+            }else{
+              $lastname=$_POST["lastname"];
+              $lastname=filter_var($lastname,FILTER_SANITIZE_STRING);
+               if (!preg_match("/^[a-zA-Z-' ]*$/",$lastname)) {
+               $lnameerr = "Only letters and white space allowed";}header("location:error.php");
 
-  $sql= "UPDATE staffdata SET 
-  id='.$id.',Lastname='.$Lastname.',
- Firstname='.$firstName.',Employeeid='.$employeeid.',Gender='.$gender.',Admission_number='.$admission_number.',Salary='.$salary.',reg_date='.$date.' WHERE id= '$id' ";  
- $a=$conn->query($sql) or die ($conn->error);
- if ($a===TRUE) {
+            }               
+         if (empty($_POST["email"])) {
+              # code...
+              $emailerr="Email is required";
+            }else{
+              $email=$_POST["email"];
+              $email=filter_var($email,FILTER_SANITIZE_EMAIL);
+              if (!filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
+              $email=$_POST["email"];
+            }else{
+              $emailerr="invalid email";
+              }
+            }
+
+          if (empty($_POST["employeeid"])) {
+            # code...
+            $employeeiderr="EMPLOYEE ID IS REQUIRED";
+          }else{
+            $employeeid=$_POST["employeeid"];
+            $employeeid=filter_var($employeeid,FILTER_SANITIZE_NUMBER_INT);
+            // validate integers
+    if (filter_var($employeeid, FILTER_VALIDATE_INT) === 0 || !filter_var($employeeid, FILTER_VALIDATE_INT) === false) {
+      $employeeid=$_POST["employeeid"];
+      } else {
+        $employeeiderr="ID is invalid";header("location:error.php");
+      }
+    }
+
+      if (empty($_POST["salary"])) {
+            # code...
+            $salaryerr="Salary Value is required";
+          }else{
+            $salary=$_POST["salary"];
+            $salary=filter_var($salary,FILTER_SANITIZE_NUMBER_INT);
+            // validate integers
+    if (filter_var($salary, FILTER_VALIDATE_INT) === 0 || !filter_var($salary, FILTER_VALIDATE_INT) === false) {
+         $salary=$_POST["salary"];
+      } else {
+        $salaryerr="Salary is invalid";header("location:error.php");
+      }
+    }
+     
+
+     if (empty($_POST["gender"])) {
+    # code...
+    $gendererr="staff's gender is required";
+  }else{
+    $gender=$_POST["gender"];
+  }   
+// /captures users input
+  $passport = $_FILES['passport']['name'];
    # code...
-  echo "update SUCCESSFUL";
-  header('Location:liststaff.php');
- }
-}
- else{
-  echo "something gone wrong";
- }
+    // this variable is for the path of the image storage
+  $target = "staffphoto/" .basename($_FILES['passport']['name']);  
+    $temp=$_FILES['passport']['tmp_name'];
+    move_uploaded_file($temp,$target);
+
+    if (empty(($fnameerr) &&(lnameerr) &&(emailerr) &&(employeeiderr) &&(salaryerr) &&(gendererr)    )) {
+      # code...
+   $sql="UPDATE staffdata SET Firstname='$firstname',Lastname='$lastname',Gender='$gender',Employee_id='$employeeid',Email='$email',Salary='$salary',Passport='$passport' WHERE id='$id' ";
+   $a=$conn->query($sql) or die($conn->error);
+      if ($a===TRUE) {
+        # code...
+        echo "update successful";
+        header('Location:liststaff.php');
+  
+      }
 
 
-}
+  
+
+      }
+      else{echo "Please input valid details";}
+
+
+
+
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ?>

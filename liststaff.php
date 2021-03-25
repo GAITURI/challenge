@@ -13,7 +13,7 @@ if($conn->connect_error){
 ?>
 
 <?php 
-$sql="SELECT id, Lastname, Firstname, Employeeid, Gender, Admission_number, Salary, reg_date FROM staffdata" ;
+$sql="SELECT Id, Lastname, Firstname, Employee_id, Gender, Salary,Email,Passport FROM staffdata" ;
 $result =$conn->query($sql);
 ?>
 <!DOCTYPE html>
@@ -31,16 +31,18 @@ $result =$conn->query($sql);
 <body>
 <h3>STAFFDATA</h3>
 <div class="container">
-  <table class="table table-dark table-hover" >
+  <table class="table table-dark table-hover table-border" >
     <thead>
+      
       <tr>
         <th>no</th>
-         <th>FIRSTNAME</th>  
+         <th>FIRSTNAMe</th>  
           <th>LASTNAME</th>
-           <th>EMPLOYEE ID</th>
+           <th>EMPLOYEE_ID</th>
             <th>GENDER</th>
-             <th>ADMISSION_NO</th>
-              <th>SALARY</th>
+             <th>Salary</th>
+              <th>EMAIL</th>
+              <th>Passport</th>
               <th colspan="2">Actions</th>
     </tr>
     </thead>
@@ -51,16 +53,21 @@ $result =$conn->query($sql);
         # code...
        ?>
        <tr>
-         <td><?php echo $row['id']; ?></td>
+        
+         <td><?php echo $row['Id']; ?></td>
          <td><?php echo $row['Firstname']; ?></td>
          <td><?php echo $row['Lastname']; ?> </td>
-         <td><?php echo $row['Employeeid']; ?> </td>
+         <td><?php echo $row['Employee_id']; ?> </td>
          <td><?php echo $row['Gender']; ?> </td>
-         <td><?php echo $row['Admission_number']; ?> </td>
          <td><?php echo $row['Salary']; ?> </td>
+         <td><?php echo $row['Email']; ?> </td>
          <td>
-        <a href="staffupdateform.php?edit=<?php echo $row['id'];  ?>" type="button" value="edit" name="edit" class="btn btn-warning">Edit</a>
-        <a href="liststaff.php?delete=<?php echo $row['id']; ?>" class="btn btn-danger" type="button" name="delete">Delete</a>
+        <?php echo "<img src='staffphoto/" . $row['Passport'] . "'style='width:100px; height:100px;'>" 
+        ?>
+        </td>
+        <td>
+          <a href="staffupdateform.php?edit=<?php echo $row['Id'];  ?>" type="button" value="edit" name="edit" class="btn btn-warning">Edit</a>
+        <a href="liststaff.php?delete=<?php echo $row['Id']; ?>" class="btn btn-danger" type="button" name="delete">Delete</a>
         </td>
 
        </tr>

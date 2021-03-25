@@ -108,30 +108,24 @@
 								<h2>Staff Form</h2>
 								<span class="byline">"We Keep on shining!"</span>
 							</header>
-	<form  action="update.php" method="POST">
-		
-	
+	<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method='POST' enctype="multipart/form-data" >
 		<div class="row">
-			<div class="col-md-6 form-group">
-				<label for="id" class="form-group">ENTER ID NO</label>
-				<input type="VARCHAR" name="id" class="form-control" >
-				<span class="error"><?php echo $iderr; ?></span>
-			</div>
+			
 			<div class="col-md-6 form-group">
 				<label for="firstName" class="form-group">Fill in Firstname</label>
-				<input type="text" name="firstname" class="form-control">
-				<span class="error"> <?php echo $firstnameErr;?></span>
+				<input type="text" name="firstname" class="form-control" value="<?php echo $firstname; ?>">
+				<span class="error"> <?php echo $fnameerr;?></span>
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-6 form-group">
 				<label for="lastname" class="form-group">ENTER Lastname</label>
-				<input type="text" name="Lastname" class="form-control" >
-				<span class="error"><?php echo $lastnameErr; ?></span>
+				<input type="text" name="lastname" class="form-control" value="<?php echo $lastname;?> " >
+				<span class="error"><?php echo $lnameerr; ?></span>
 			</div>
 			<div class="col-6 form-group">
 				<label for="employeeid" class="form-group">Fill in Employeeid</label>
-				<input type="VARCHAR" name="employeeid" class="form-control">
+				<input type="text" name="employeeid" class="form-control" value="<?php echo $employeeid;?>">
 				 <span class="error"><?php echo $employeeiderr; ?></span> 
 			</div>
 		</div>
@@ -149,25 +143,23 @@
 				
 			</div>
 			<div class="col-6 form-group">
-				<label for="admission_number" class="form-group">Fill in Admission number</label>
-				<input type="VARCHAR" name="admission_number" class="form-control">
-			 <span class="error"><?php echo  $admission_numbererr; ?> </span> 
+				<label for="email" class="form-group">Fill in email</label>
+				<input type="VARCHAR" name="email" class="form-control" value="<?php echo $email;?> ">
+			 <span class="error"><?php echo  $emailerr; ?> </span> 
 			</div>
 
 		</div>
 		<div class="row">
 			<div class="col-6">
-				<label for="date" class="form-group">
-					Select Date
-				</label>
-				<input type="Date" name="reg_date" class="form-control">
-			</div>
+      <label><strong>staff's passport photo</strong></label>
+      <input type="file" class="form-control" name="passport" id="passport"  placeholder="Staff's photo" value="<?php echo $passport;?>">
+    </div>
 			<div class="col-6">
 				<label for="salary" class="form-group">
 					Enter SALARY
 				</label>
-				<input type="VARCHAR" name="salary" class="form-control">
-				<!-- <span class="error"><?php echo $salaryerr ?></span> -->
+				<input type="text" name="salary" class="form-control">
+				<span class="error"><?php echo $salaryerr; ?></span>
 			</div>
 		 </div>
 		  <div class="form-group">
@@ -176,21 +168,14 @@
    			 </textarea>
  		 </div>
 		 	<div class="row" style="margin-bottom: 10px;">
-        <?php
-      if ($update == true):
-        ?>
-           
-    <?php
-      else:
-        ?>
+        
        
-     <input type="submit" name="update" value="Submit" id="update" class="form-control btn btn-primary btn-block">
-    </div>
-    <div class="col-6">
+     <input type="submit" name="save" value="Submit" id="update" class="form-control btn btn-primary">
+
       <input type="reset" class="form-control btn btn-danger btn-block">
-    </div>	
-      
-    <?php endif; ?>
+   
+    </div>  
+   
   </div>
 	</form>
 						</section>
